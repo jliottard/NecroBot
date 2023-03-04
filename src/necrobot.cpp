@@ -12,7 +12,9 @@ int main() {
     cv::Mat playerImage = cv::imread("../img/carence.png", cv::IMREAD_COLOR);
     cv::Mat gameImage = cv::imread("../img/game_screenshot_example.png", cv::IMREAD_COLOR);
     cv::Point detectionPoint = detect(playerImage, gameImage);
+    std::cout << gameImage.rows << " " << gameImage.cols << std::endl;
     std::cout << detectionPoint << std::endl;
+
 
     return 0;
 }
