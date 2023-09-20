@@ -1,7 +1,7 @@
-#ifndef SCRENSHOT_HPP
-#define SCRENSHOT_HPP
+#ifndef SCREENSHOT_HPP
+#define SCREENSHOT_HPP
 
-#include <cassert>
+#include <string>
 
 // Image manipulation
 #include <opencv2/opencv.hpp>   // this header must be included before X11 includes
@@ -9,7 +9,6 @@
 // Image recording for linux
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-#include <stdio.h>
 
 class Screenshot
 {
@@ -19,29 +18,13 @@ class Screenshot
     int x, y, width, height;
 
 public:
-    Screenshot(int x, int y, int width, int height):
-        x(x),
-        y(y),
-        width(width),
-        height(height)
-    {
-        this->display = XOpenDisplay(nullptr);
-        assert(this->display);
-        this->root = RootWindow(this->display, DefaultScreen(this->display));
-    }
+    Screenshot(int x, int y, int width, int height);
+    ~Screenshot();
 
-    ~Screenshot()
-    {
-        if (image != nullptr)
-            XDestroyImage(image);
-        XCloseDisplay(this->display);
-    }
-
-    cv::Mat takeScreenshot()
-    {
-        this->image = XGetImage(this->display, this->root, this->x, this->y, this->width, this->height, AllPlanes, ZPixmap);
-        return cv::Mat(this->height, this->width, CV_8UC4, this->image->data);
-    }
+    cv::Mat takeScreenshot();
+    void getNecroWindow();
+private:
+    void findWindow(Window window, std::string &windowName, Window* windowReturn);
 };
 
 #endif
