@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(NecroBot)
+project(NecroBot CXX)
 
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -12,9 +12,7 @@ find_package(X11 REQUIRED)
 include_directories(${X11_INCLUDE_DIR})
 link_directories(${X11_LIBRARIES})
 
-
 add_subdirectory(src)
-list(APPEND EXTRA_LIBS Detection)
 
 add_executable(NecroBot src/necrobot.cpp)
 target_link_libraries(NecroBot
@@ -24,5 +22,5 @@ target_link_libraries(NecroBot
 )
 
 target_include_directories(NecroBot PUBLIC
-                           "${PROJECT_BINARY_DIR}"
-                           )
+    "${PROJECT_BINARY_DIR}"
+)
